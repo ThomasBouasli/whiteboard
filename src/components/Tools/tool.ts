@@ -10,6 +10,7 @@ export type ToolJSON = {
     y: number;
     height: number;
     width: number;
+    seed?: number;
     points?: [number, number, number][];
   };
 };

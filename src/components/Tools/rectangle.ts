@@ -2,6 +2,7 @@ import { Tool, ToolJSON, Tools } from "./tool";
 import rough from "roughjs";
 
 type RectangleData = {
+  seed: number;
   x: number;
   y: number;
   width: number;
@@ -18,6 +19,7 @@ export class Rectangle implements Tool<Rectangle> {
 
   onMouseDown(event: PointerEvent): void {
     this.data = {
+      seed: Math.random() * 1000000,
       x: event.clientX,
       y: event.clientY,
       width: 0,
@@ -47,7 +49,11 @@ export class Rectangle implements Tool<Rectangle> {
         [x, y + height],
       ],
       {
-        seed: 2,
+        seed: this.data.seed,
+        bowing: 2,
+        hachureAngle: 60,
+        roughness: 1.5,
+        strokeWidth: 2,
       }
     );
   }
@@ -57,7 +63,10 @@ export class Rectangle implements Tool<Rectangle> {
   }
 
   fromJSON(data: ToolJSON): Rectangle {
-    return new Rectangle(data.data);
+    return new Rectangle({
+      ...data.data,
+      seed: data.data.seed!,
+    });
   }
 
   toJSON(): ToolJSON {
