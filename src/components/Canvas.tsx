@@ -121,8 +121,8 @@ const Canvas = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSeed((prev) => prev + 1);
-    }, 100);
+      setSeed(Math.random() * 100);
+    }, 150);
 
     return () => {
       clearInterval(interval);
