@@ -10,13 +10,12 @@ export type ToolJSON = {
     y: number;
     height: number;
     width: number;
-    seed?: number;
     points?: [number, number, number][];
   };
 };
 
 export interface Tool<T extends Tool<T>> {
-  render(ctx: CanvasRenderingContext2D): void;
+  render(ctx: CanvasRenderingContext2D, seed: number): void;
   onMouseDown(event: PointerEvent): void;
   onMouseMove(event: PointerEvent): void;
   setKeepRatio(value: boolean): void;

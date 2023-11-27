@@ -32,27 +32,39 @@ export class Arrow implements Tool<Arrow> {
     this.data.height = event.clientY;
   }
 
-  render(ctx: CanvasRenderingContext2D): void {
+  render(ctx: CanvasRenderingContext2D, seed: number): void {
     if (!this.data) return;
 
     const { x, y, width, height } = this.data;
 
     const rc = rough.canvas(ctx.canvas);
 
-    rc.line(x, y, width, height);
-    rc.linearPath([
-      [width, height],
+    rc.line(x, y, width, height, {
+      stroke: "hsl(289 62% 95%)",
+      seed,
+    });
+    rc.linearPath(
       [
-        width - 20 * Math.cos(Math.atan2(width - x, height - y) - Math.PI / 4),
-        height -
-          -20 * Math.sin(Math.atan2(width - x, height - y) - Math.PI / 4),
+        [width, height],
+        [
+          width -
+            20 * Math.cos(Math.atan2(width - x, height - y) - Math.PI / 4),
+          height -
+            -20 * Math.sin(Math.atan2(width - x, height - y) - Math.PI / 4),
+        ],
+        [width, height],
+        [
+          width -
+            -20 * Math.cos(Math.atan2(width - x, height - y) + Math.PI / 4),
+          height -
+            20 * Math.sin(Math.atan2(width - x, height - y) + Math.PI / 4),
+        ],
       ],
-      [width, height],
-      [
-        width - -20 * Math.cos(Math.atan2(width - x, height - y) + Math.PI / 4),
-        height - 20 * Math.sin(Math.atan2(width - x, height - y) + Math.PI / 4),
-      ],
-    ]);
+      {
+        stroke: "hsl(289 62% 95%)",
+        seed,
+      }
+    );
   }
 
   setKeepRatio(value: boolean): void {

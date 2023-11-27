@@ -39,17 +39,29 @@ export class Pen implements Tool<Pen> {
     this.data.points.push([event.clientX, event.clientY, event.pressure]);
   }
 
-  render(ctx: CanvasRenderingContext2D): void {
+  render(ctx: CanvasRenderingContext2D, seed: number): void {
     if (!this.data) return;
 
     const { points } = this.data;
 
-    const stroke = getStroke(points, {
-      size: 16,
-      thinning: 0.5,
-      smoothing: 0.5,
-      streamline: 0.5,
-    });
+    const stroke = getStroke(
+      points.map((data) => {
+        return [
+          data[0] + Math.cos(seed * Math.random()) * 1.5,
+          data[1] + Math.sin(seed * Math.random()) * 1.5,
+          data[2],
+        ];
+      }),
+      {
+        size: 4,
+        thinning: 0.6,
+        smoothing: 0,
+        streamline: 0.5, // suavizador
+        easing: (t) => t,
+        last: true,
+        simulatePressure: true,
+      }
+    );
 
     ctx.beginPath();
     for (let i = 0; i < stroke.length; i++) {
@@ -61,7 +73,10 @@ export class Pen implements Tool<Pen> {
       }
     }
 
+    ctx.fillStyle = "hsl(289 62% 95%)";
+    ctx.strokeStyle = "hsl(289 62% 95%)";
     ctx.fill();
+    ctx.stroke();
     ctx.closePath();
   }
 

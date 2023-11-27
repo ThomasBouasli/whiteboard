@@ -6,7 +6,6 @@ type CircleData = {
   y: number;
   width: number;
   height: number;
-  seed: number;
 };
 
 export class Circle implements Tool<Circle> {
@@ -23,7 +22,6 @@ export class Circle implements Tool<Circle> {
       y: event.clientY,
       width: 0,
       height: 0,
-      seed: Math.random() * 1000000,
     };
   }
 
@@ -34,7 +32,7 @@ export class Circle implements Tool<Circle> {
     this.data.height = event.clientY - this.data.y;
   }
 
-  render(ctx: CanvasRenderingContext2D): void {
+  render(ctx: CanvasRenderingContext2D, seed: number): void {
     if (!this.data) return;
 
     const { x, y, width, height } = this.data;
@@ -42,11 +40,12 @@ export class Circle implements Tool<Circle> {
     const rc = rough.canvas(ctx.canvas);
 
     rc.ellipse(x, y, width, height, {
-      seed: this.data.seed,
+      seed,
       bowing: 2,
       hachureAngle: 60,
       roughness: 1.5,
       strokeWidth: 2,
+      stroke: "hsl(289 62% 95%)",
     });
   }
 
@@ -55,10 +54,7 @@ export class Circle implements Tool<Circle> {
   }
 
   fromJSON(data: ToolJSON): Circle {
-    return new Circle({
-      ...data.data,
-      seed: data.data.seed!,
-    });
+    return new Circle(data.data);
   }
 
   toJSON(): ToolJSON {

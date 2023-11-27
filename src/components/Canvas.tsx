@@ -6,6 +6,7 @@ import { Tool, ToolFactory, Tools } from "./Tools/tool";
 import { useTool } from "@/providers/ToolProvider";
 
 const Canvas = () => {
+  const [seed, setSeed] = React.useState<number>(0);
   const [keepRatio, setKeepRatio] = React.useState<boolean>(false);
   const [data, setData] = React.useState<Tool<any>[]>();
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -114,15 +115,25 @@ const Canvas = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (const d of data) {
-      d.render(ctx);
+      d.render(ctx, seed);
     }
-  }, [data, canvasRef]);
+  }, [data, canvasRef, seed]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeed((prev) => prev + 1);
+    }, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <canvas
       ref={canvasRef}
       style={{ touchAction: "none" }}
-      className="fixed top-0 left-0 h-screen w-screen bg-white touch-none cursor-crosshair"
+      className="fixed top-0 left-0 h-screen w-screen bg-background touch-none cursor-crosshair"
     />
   );
 };
