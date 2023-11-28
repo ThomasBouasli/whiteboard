@@ -40,7 +40,7 @@ export class Circle implements Tool<Circle> {
     const rc = rough.canvas(ctx.canvas);
 
     rc.ellipse(x, y, width, height, {
-      seed,
+      seed: seed ?? 0,
       bowing: 2,
       hachureAngle: 60,
       roughness: 1.5,

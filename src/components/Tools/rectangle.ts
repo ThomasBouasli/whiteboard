@@ -47,7 +47,7 @@ export class Rectangle implements Tool<Rectangle> {
         [x, y + height],
       ],
       {
-        seed,
+        seed: seed ?? 0,
         bowing: 2,
         hachureAngle: 60,
         roughness: 1.5,

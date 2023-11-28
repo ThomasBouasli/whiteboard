@@ -41,7 +41,7 @@ export class Arrow implements Tool<Arrow> {
 
     rc.line(x, y, width, height, {
       stroke: "hsl(289 62% 95%)",
-      seed,
+      seed: seed ?? 0,
     });
     rc.linearPath(
       [
