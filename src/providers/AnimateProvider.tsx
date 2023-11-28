@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react";
 
 export interface ToolContextProps {
   animate: boolean;
-  setAnimate: (animate: boolean | ((prev: boolean) => boolean)) => void;
+  setAnimate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const AnimateContext = createContext<ToolContextProps>({
@@ -26,8 +26,4 @@ export const AnimateProvider = ({
   );
 };
 
-export const useAnimate = () => {
-  return {
-    ...useContext(AnimateContext),
-  };
-};
+export const useAnimate = () => useContext(AnimateContext);

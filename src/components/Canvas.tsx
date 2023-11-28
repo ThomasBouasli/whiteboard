@@ -2,15 +2,17 @@
 
 import React, { useEffect } from "react";
 
-import { Tool, ToolFactory, Tools } from "./Tools/tool";
+import { ToolFactory } from "./Tools/tool";
 import { useTool } from "@/providers/ToolProvider";
 import { useAnimate } from "@/providers/AnimateProvider";
+import { useData } from "@/providers/DataProvider";
 
 const Canvas = () => {
   const [seed, setSeed] = React.useState<number | null>(null);
   const [keepRatio, setKeepRatio] = React.useState<boolean>(false);
-  const [data, setData] = React.useState<Tool<any>[]>();
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
+
+  const { data, setData } = useData();
   const { selectedTool } = useTool();
   const { animate } = useAnimate();
 
@@ -42,7 +44,7 @@ const Canvas = () => {
         });
       }
     });
-  }, []);
+  }, [setData]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -105,7 +107,7 @@ const Canvas = () => {
       canvas.removeEventListener("pointerdown", handleMouseDown);
       canvas.removeEventListener("pointermove", handleMouseMove);
     };
-  }, [selectedTool, keepRatio, data, canvasRef]);
+  }, [selectedTool, keepRatio, data, canvasRef, setData]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

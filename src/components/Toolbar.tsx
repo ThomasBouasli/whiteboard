@@ -4,13 +4,22 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useTool } from "@/providers/ToolProvider";
 import { Tools } from "./Tools/tool";
 import { useEffect } from "react";
-import { ArrowUp, Circle, Pen, Play, RectangleHorizontal } from "lucide-react";
+import {
+  ArrowUp,
+  Circle,
+  Pen,
+  Play,
+  RectangleHorizontal,
+  Undo,
+} from "lucide-react";
 import { useAnimate } from "@/providers/AnimateProvider";
 import { Toggle } from "./ui/toggle";
+import { useData } from "@/providers/DataProvider";
 
 const Toolbar = () => {
   const { setSelectedTool, selectedTool } = useTool();
   const { animate, setAnimate } = useAnimate();
+  const { undo } = useData();
 
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
@@ -65,12 +74,15 @@ const Toolbar = () => {
         </ToggleGroupItem>
       </ToggleGroup>
       <Toggle
+        className="ml-1"
         value="animate"
         pressed={animate}
         onClick={() => setAnimate((prev) => !prev)}
-        className="ml-2"
       >
         <Play size={14} />
+      </Toggle>
+      <Toggle className="ml-1" pressed={false} value="undo" onClick={undo}>
+        <Undo size={14} />
       </Toggle>
     </div>
   );

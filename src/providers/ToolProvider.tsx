@@ -24,8 +24,4 @@ export const ToolProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const useTool = () => {
-  return {
-    ...useContext(ToolContext),
-  };
-};
+export const useTool = () => useContext(ToolContext);
