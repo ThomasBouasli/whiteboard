@@ -32,7 +32,7 @@ export class Arrow implements Tool<Arrow> {
     this.data.height = event.clientY;
   }
 
-  render(ctx: CanvasRenderingContext2D, seed: number): void {
+  render(ctx: CanvasRenderingContext2D, seed: number | null): void {
     if (!this.data) return;
 
     const { x, y, width, height } = this.data;
@@ -41,7 +41,7 @@ export class Arrow implements Tool<Arrow> {
 
     rc.line(x, y, width, height, {
       stroke: "hsl(289 62% 95%)",
-      seed: seed ?? 0,
+      seed: seed ?? 1,
     });
     rc.linearPath(
       [
@@ -62,7 +62,7 @@ export class Arrow implements Tool<Arrow> {
       ],
       {
         stroke: "hsl(289 62% 95%)",
-        seed,
+        seed: seed ?? 1,
       }
     );
   }

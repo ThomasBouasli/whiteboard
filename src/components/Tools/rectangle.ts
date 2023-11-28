@@ -32,7 +32,7 @@ export class Rectangle implements Tool<Rectangle> {
     this.data.height = event.clientY - this.data.y;
   }
 
-  render(ctx: CanvasRenderingContext2D, seed: number): void {
+  render(ctx: CanvasRenderingContext2D, seed: number | null): void {
     if (!this.data) return;
 
     const { x, y, width, height } = this.data;
@@ -47,7 +47,7 @@ export class Rectangle implements Tool<Rectangle> {
         [x, y + height],
       ],
       {
-        seed: seed ?? 0,
+        seed: seed ?? 1,
         bowing: 2,
         hachureAngle: 60,
         roughness: 1.5,

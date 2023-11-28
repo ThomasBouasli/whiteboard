@@ -39,18 +39,22 @@ export class Pen implements Tool<Pen> {
     this.data.points.push([event.clientX, event.clientY, event.pressure]);
   }
 
-  render(ctx: CanvasRenderingContext2D, seed: number): void {
+  render(ctx: CanvasRenderingContext2D, seed: number | null): void {
     if (!this.data) return;
 
     const { points } = this.data;
 
     const stroke = getStroke(
       points.map((data) => {
-        return [
-          data[0] + Math.cos(seed * Math.random()) * 1.5,
-          data[1] + Math.sin(seed * Math.random()) * 1.5,
-          data[2],
-        ];
+        if (seed) {
+          return [
+            data[0] + Math.cos(seed * Math.random()) * 1.5,
+            data[1] + Math.sin(seed * Math.random()) * 1.5,
+            data[2],
+          ];
+        } else {
+          return [data[0], data[1], data[2]];
+        }
       }),
       {
         size: 4,
