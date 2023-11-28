@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+
+import { Analytics } from "@vercel/analytics/react";
+
 import "@/styles/globals.css";
 
 import { Caveat } from "next/font/google";
@@ -43,6 +46,7 @@ export default function RootLayout({
           </Link>
         </h1>
         {children}
+        <Analytics />
       </body>
     </html>
   );
