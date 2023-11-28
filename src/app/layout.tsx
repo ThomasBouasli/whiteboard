@@ -8,6 +8,7 @@ import { Heart } from "lucide-react";
 export const metadata: Metadata = {
   title: "Whiteboard",
   description: "Paper is boring",
+  metadataBase: new URL("https://www.whiteboard.bouasli.com"),
   openGraph: {
     title: "Whiteboard",
     description: "Paper is boring",

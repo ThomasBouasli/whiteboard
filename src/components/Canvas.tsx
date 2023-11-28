@@ -4,13 +4,15 @@ import React, { useEffect } from "react";
 
 import { Tool, ToolFactory, Tools } from "./Tools/tool";
 import { useTool } from "@/providers/ToolProvider";
+import { useAnimate } from "@/providers/AnimateProvider";
 
 const Canvas = () => {
-  const [seed, setSeed] = React.useState<number>(0);
+  const [seed, setSeed] = React.useState<number | null>(null);
   const [keepRatio, setKeepRatio] = React.useState<boolean>(false);
   const [data, setData] = React.useState<Tool<any>[]>();
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const { selectedTool } = useTool();
+  const { animate } = useAnimate();
 
   useEffect(() => {
     // window cant be used in server side, useEffect ensures that this code is only run on client side
@@ -120,6 +122,11 @@ const Canvas = () => {
   }, [data, canvasRef, seed]);
 
   useEffect(() => {
+    if (!animate) {
+      setSeed(null);
+      return;
+    }
+
     const interval = setInterval(() => {
       setSeed(Math.random() * 100);
     }, 150);
@@ -127,7 +134,7 @@ const Canvas = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [animate]);
 
   return (
     <canvas

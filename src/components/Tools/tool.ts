@@ -15,7 +15,7 @@ export type ToolJSON = {
 };
 
 export interface Tool<T extends Tool<T>> {
-  render(ctx: CanvasRenderingContext2D, seed: number): void;
+  render(ctx: CanvasRenderingContext2D, seed: number | null): void;
   onMouseDown(event: PointerEvent): void;
   onMouseMove(event: PointerEvent): void;
   setKeepRatio(value: boolean): void;
