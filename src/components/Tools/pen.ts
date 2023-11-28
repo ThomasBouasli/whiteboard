@@ -48,8 +48,8 @@ export class Pen implements Tool<Pen> {
       points.map((data) => {
         if (seed) {
           return [
-            data[0] + Math.cos(seed * Math.random()) * 1.5,
-            data[1] + Math.sin(seed * Math.random()) * 1.5,
+            data[0] + Math.cos(seed * 0.1 * data[0]) * 1.2,
+            data[1] + Math.sin(seed * 0.1 * data[1]) * 1.2,
             data[2],
           ];
         } else {
