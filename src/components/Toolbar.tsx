@@ -10,7 +10,7 @@ import { Toggle } from "./ui/toggle";
 
 const Toolbar = () => {
   const { setSelectedTool, selectedTool } = useTool();
-  const { setAnimate } = useAnimate();
+  const { animate, setAnimate } = useAnimate();
 
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
@@ -27,13 +27,15 @@ const Toolbar = () => {
         case "p":
           setSelectedTool(Tools.Pen);
           break;
+        case " ":
+          setAnimate((prev) => !prev);
+          break;
         default:
           break;
       }
     });
-  }, [setSelectedTool]);
+  }, [setSelectedTool, setAnimate]);
 
-  // Toolbar is not rendered for now, but a actual toolbar will be added in the future
   return (
     <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-10 flex items-center justify-center w-fit h-fit bg-secondary p-1 rounded-md">
       <ToggleGroup type="single" value={selectedTool}>
@@ -64,6 +66,7 @@ const Toolbar = () => {
       </ToggleGroup>
       <Toggle
         value="animate"
+        pressed={animate}
         onClick={() => setAnimate((prev) => !prev)}
         className="ml-2"
       >
